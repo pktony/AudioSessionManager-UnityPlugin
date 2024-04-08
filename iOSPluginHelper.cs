@@ -1,7 +1,7 @@
-using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using UnityEngine;
+using System;
 
 public enum AudioSessionCategory : int
 {
@@ -24,40 +24,71 @@ public enum AudioSessionMode : int
     videoRecording,
     voiceChat,
     voicePrompt
-
 }
 
-public class iOSPluginHelper : MonoBehaviour
+public class iOSAudioManager
 {
-    [DllImport("__Internal")]
-    private static extern void SetAudioCategory(string category);
-    [DllImport("__Internal")]
-    private static extern void SetAudioMode(string mode);
+    #region Connection Test Functions
     [DllImport("__Internal")]
     private static extern void TestConnection();
     [DllImport("__Internal")]
     private static extern void TestParameterConnection(string mode);
+    #endregion
 
+    [DllImport("__Internal")]
+    private static extern void SetAudioCategory(string category);
+    [DllImport("__Internal")]
+    private static extern void SetAudioMode(string mode);
 
-    public static iOSPluginHelper Instance ;
+    [DllImport("__Internal")]
+    private static extern string GetCurrentAudioMode();
+    [DllImport("__Internal")]
+    private static extern string GetCurrentAudioCategory();
+    [DllImport("__Internal")]
+    private static extern void SetEnableHapticDuringRecording(bool isEnable);
 
-    private void Awake()
+    public static void SetIOSAudioMode(AudioSessionMode mode)
     {
-        Instance = this;
-
-        TestConnection();
-        TestParameterConnection("Hello");
+        Debug.Log($"iOSAudioManager : SetIOSAudioMode - {mode.ToString()}");
+        SetAudioMode(mode.ToString());
     }
 
-    public void SetIOSAudioCategory(string category)
+    public static void SetIOSAudioCategory(AudioSessionCategory category)
     {
-        Utility.Log(this, "SetIOSAudioCategory");
-        SetAudioCategory(category);
+        Debug.Log($"iOSAudioManager : SetIOSAudioCategory - {category.ToString()}");
+        SetAudioCategory(category.ToString());
     }
 
-    public void SetIOSAudioMode(string mode)
+    public static AudioSessionMode GetCurrentIOSAudioMode()
     {
-        Utility.Log(this, "SetIOSAudioMode");
-        SetAudioMode(mode);
+        string currentMode = GetCurrentAudioMode();
+
+        var result = Enum.TryParse(typeof(AudioSessionMode), currentMode, out var mode);
+        if (!result)
+        {
+            Debug.LogWarning($"iOSAudioManager : GetCurrentAudioMode - {currentMode} is not a valid AudioSessionMode");
+            return AudioSessionMode.Default;
+        }
+
+        return (AudioSessionMode)mode;
+    }
+
+    public static AudioSessionCategory GetCurrentIOSAudioCategory()
+    {
+        string currentCategory = GetCurrentAudioCategory();
+
+        var result = Enum.TryParse(typeof(AudioSessionCategory), currentCategory, out var category);
+        if (!result)
+        {
+            Debug.LogWarning($"iOSAudioManager : GetCurrentAudioCategory - {currentCategory} is not a valid AudioSessionCategory");
+            return AudioSessionCategory.soloAmbient;
+        }
+
+        return (AudioSessionCategory)category;
+    }
+
+    public static void SetEnableIOSHapticDuringRecording(bool isEnable)
+    {
+        SetEnableHapticDuringRecording(isEnable);
     }
 }
