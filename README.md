@@ -1,6 +1,6 @@
 - [Overview](#overview)
-- [Does Unity Support Swift ?](#does-unity-support-swift--)
-- [Why Swift ?](#why-swift--)
+- [Does Unity Support Swift ?](#does-unity-support-swift-)
+- [Why Swift ?](#why-swift-)
 - [Implementation](#implementation)
   * [Swift Project](#swift-project)
   * [Bridge](#bridge)
@@ -31,11 +31,12 @@ For those who are familiar with Object-C, and have no reason to use Swift, it is
 
 Make a iOS Framework project. Make sure to choose for iOS platform.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/30a179ee-c9d8-4440-a00f-5efb05a31669/91544ad7-4eaa-4b31-9d56-387ef1a44176/Untitled.png)
+![image](https://github.com/pktony/AudioSessionManager-UnityPlugin/assets/66198932/fd3a3189-bf03-4c46-8e7d-bbfe919eb6ca)
 
 ### Bridge
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/30a179ee-c9d8-4440-a00f-5efb05a31669/bff8cdc1-ed3f-4f97-ad38-bfb66b2b28ee/Untitled.png)
+![image](https://github.com/pktony/AudioSessionManager-UnityPlugin/assets/66198932/b6f85ee5-b6e6-4f4a-8b8c-580eb461b27d)
+
 
 Create 3 files :
 
